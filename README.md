@@ -7,6 +7,7 @@ This go package has been created to do image processing with golang. I'm current
 ![default](./assets/images/gopher_and_docker.jpeg)
 
 ## Table of Content
+
 1. [Effects](#effects)
     - [Grayscale](#grayscale)
     - [Threshold](#threshold)
