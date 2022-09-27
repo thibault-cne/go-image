@@ -80,3 +80,19 @@ func Luminance(c color.RGBA) float64 {
 
 	return float64(r*float64(c.R) + g*float64(c.G) + b*float64(c.R))
 }
+
+func Min(x, y int) int {
+	if x < y {
+		return x
+	}
+
+	return y
+}
+
+func Max(x, y int) int {
+	if x < y {
+		return y
+	}
+
+	return x
+}

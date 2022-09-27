@@ -63,12 +63,22 @@ func Threshold(img image.Image, level uint8) *image.Gray {
 }
 
 // The x0, y0, x1, y1 values must be inside the picture
-func Invert(img image.Image, x0, y0, x1, y1 int) *image.RGBA {
+func Invert(img image.Image, config ...int) *image.RGBA {
 	src := clone.CloneAsRGBA(img)
 	bounds := src.Bounds()
 	w, h := bounds.Dx(), bounds.Dy()
 
 	dst := image.NewRGBA(bounds)
+
+	var x0, x1, y0, y1 int
+
+	if len(config) == 4 && config[0] < w && config[1] < w && config[2] < h && config[3] < h {
+		x0, x1 = util.Min(config[0], config[1]), util.Max(config[0], config[1])
+		y0, y1 = util.Min(config[2], config[3]), util.Max(config[2], config[3])
+	} else {
+		x0, x1 = 0, w
+		y0, y1 = 0, h
+	}
 
 	for x := 0; x < w; x++ {
 		for y := 0; y < h; y++ {
