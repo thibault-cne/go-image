@@ -13,8 +13,8 @@ func main() {
 
 	img, _, _ := image.Decode(f)
 
-	dst := effects.Threshold(img, 187)
+	dst := effects.Blur(img, 7)
 
-	nf, _ := os.Create("halfThreshold.jpeg")
+	nf, _ := os.Create("Blur.jpeg")
 	jpeg.Encode(nf, dst, &jpeg.Options{Quality: 95})
 }

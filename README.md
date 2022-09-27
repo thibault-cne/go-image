@@ -83,6 +83,16 @@ newImg := effects.SobalEdge(img)
 
 ![exemple](./assets/images/SobalEdge.jpeg)
 
+### Blur
+
+You can blur an image. You can choose the blur radius. The bigger the blur radius, the more blur the picture will be.
+
+```golang
+newImg := effects.Blur(img, 5)
+```
+
+![exemple](./assets/images/Blur.jpeg)
+
 ## Licence
 
 This project is licensed under the MIT license. Please read the LICENSE file.

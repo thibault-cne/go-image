@@ -148,3 +148,33 @@ func SobalEdge(img image.Image) *image.Gray {
 
 	return dst
 }
+
+func Blur(img image.Image, radius int) *image.RGBA {
+	src := clone.CloneAsRGBA(img)
+	bounds := src.Bounds()
+	w, h := bounds.Dx(), bounds.Dy()
+
+	dst := image.NewRGBA(bounds)
+
+	b := util.BlurMatrix(radius)
+
+	for x := 0; x < w; x++ {
+		for y := 0; y < h; y++ {
+			v := color.RGBA{0, 0, 0, 0}
+
+			for i := 0; i < radius; i++ {
+				for j := 0; j < radius; j++ {
+					pix := src.At(x-1+i, y-1+j).(color.RGBA)
+					v.R += uint8((float64(pix.R) * b[i][j]))
+					v.G += uint8((float64(pix.G) * b[i][j]))
+					v.B += uint8((float64(pix.B) * b[i][j]))
+					v.A += uint8((float64(pix.A) * b[i][j]))
+				}
+			}
+
+			dst.Set(x, y, v)
+		}
+	}
+
+	return dst
+}

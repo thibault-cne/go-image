@@ -1,6 +1,7 @@
 package util
 
 import (
+	"errors"
 	"image"
 	"image/color"
 )
@@ -95,4 +96,35 @@ func Max(x, y int) int {
 	}
 
 	return x
+}
+
+func BlurMatrix(n int) [][]float64 {
+	if n%2 == 0 {
+		panic(errors.New("blur matrix constructor is not an odd number"))
+	}
+
+	var (
+		b [][]float64
+		t float64
+		m int
+	)
+
+	m = (n / 2)
+	t = 1.0 / float64(n*n-1)
+
+	for i := 0; i < n; i++ {
+		r := make([]float64, n)
+
+		for j := 0; j < n; j++ {
+			if i == m && j == m {
+				r[j] = 0
+				continue
+			}
+			r[j] = t
+		}
+
+		b = append(b, r)
+	}
+
+	return b
 }
