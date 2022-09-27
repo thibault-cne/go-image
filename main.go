@@ -13,8 +13,8 @@ func main() {
 
 	img, _, _ := image.Decode(f)
 
-	dst := effects.SobalEdge(img)
+	dst := effects.Threshold(img, 187)
 
-	nf, _ := os.Create("SobalEdge.jpeg")
+	nf, _ := os.Create("halfThreshold.jpeg")
 	jpeg.Encode(nf, dst, &jpeg.Options{Quality: 95})
 }

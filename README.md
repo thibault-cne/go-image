@@ -36,9 +36,11 @@ You can threshold a picture. It means you fix a gray level and every pixel under
 
 ```golang
 newImg := effects.Threshold(img, 0) // It will render a fully white image
+new2Img := effects.Threshold(img, 187) // It will render a half Threshold image
 ```
 
 ![exemple](./assets/images/whiteThreshold.jpeg)
+![exemple](./assets/images/halfThreshold.jpeg)
 
 ### Invert
 
