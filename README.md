@@ -47,7 +47,7 @@ newImg := effects.Threshold(img, 0) // It will render a fully white image
 
 ![exemple](./assets/images/whiteThreshold.jpeg)
 
-Here is an exemple of a half Threshold : 
+Here is an exemple of a half Threshold :
 
 ```golang
 newImg := effects.Threshold(img, 187) // It will render a half Threshold image
