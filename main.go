@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	f, _ := os.Open("gopher_and_docker.jpeg")
+	f, _ := os.Open("./assets/images/gopher_and_docker.jpeg")
 	defer f.Close()
 
 	img, _, _ := image.Decode(f)
 
-	dst := effects.Invert(img, 0, 200, 0, 200)
+	dst := effects.SobalEdge(img)
 
-	nf, _ := os.Create("partialInvert.jpeg")
+	nf, _ := os.Create("SobalEdge.jpeg")
 	jpeg.Encode(nf, dst, &jpeg.Options{Quality: 95})
 }

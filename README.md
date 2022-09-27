@@ -2,7 +2,9 @@
 
 ## Introduction
 
-This go package has been created to do image processing with golang. I'm currently working to improve it (parallels proccesses, etc).
+This go package has been created to do image processing with golang. I'm currently working to improve it (parallels proccesses, etc). In all exemple, the default image is :
+
+![default](./assets/images/gopher_and_docker.jpeg)
 
 ## Table of Content
 
@@ -55,6 +57,16 @@ newImg := effects.Invert(img, 0, 200, 0, 200) // It will invert top left square 
 ```
 
 ![exemple](./assets/images/partialInvert.jpeg)
+
+### Sobal Edge detection
+
+You can use the Sobal edge detection method.
+
+```golang
+newImg := effects.SobalEdge(img)
+```
+
+![exemple](./assets/images/SobalEdge.jpeg)
 
 ## Licence
 
