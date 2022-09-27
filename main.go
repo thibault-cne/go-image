@@ -13,8 +13,8 @@ func main() {
 
 	img, _, _ := image.Decode(f)
 
-	dst := effects.SobalEdge(img)
+	dst := effects.Invert(img, 0, 200, 0, 200)
 
-	nf, _ := os.Create("gopherEdge.png")
+	nf, _ := os.Create("gopherPartialInvert.png")
 	png.Encode(nf, dst)
 }
