@@ -14,6 +14,7 @@ This go package has been created to do image processing with golang. I'm current
     - [Invert](#invert)
     - [Sobel Edge detection](#sobal-edge-detection)
     - [Gaussian Blur](#gaussian-blur)
+    - [Color Filter](#color-filter)
 2. [Licence](#licence)
 
 ## Effects
