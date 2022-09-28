@@ -94,6 +94,16 @@ newImg := effects.GaussianBlur(img, 10)
 
 ![exemple](./assets/images/Blur.jpeg)
 
+### Color filter
+
+You can filter a specific color on an image. It will render only "close" colors and the others will be grayscaled.
+
+```golang
+newImg := effects.ColorFilter(img, color.RGBA{255, 0, 0, 255}, 6.15)
+```
+
+![exemple](./assets/images/ColorFilter.jpeg)
+
 ## Licence
 
 This project is licensed under the MIT license. Please read the LICENSE file.

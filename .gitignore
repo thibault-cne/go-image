@@ -1,2 +1,5 @@
 # Ignore config files
 .DS_store
+
+# Ignore test folder
+test

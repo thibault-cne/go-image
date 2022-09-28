@@ -3,6 +3,7 @@ package main
 import (
 	"go-image/effects"
 	"image"
+	"image/color"
 	"image/jpeg"
 	"os"
 )
@@ -13,8 +14,8 @@ func main() {
 
 	img, _, _ := image.Decode(f)
 
-	dst := effects.GaussianBlur(img, 10)
+	dst := effects.ColorFilter(img, color.RGBA{255, 0, 0, 255}, 6.15)
 
-	nf, _ := os.Create("Blur.jpeg")
+	nf, _ := os.Create("ColorFilter.jpeg")
 	jpeg.Encode(nf, dst, &jpeg.Options{Quality: 95})
 }
