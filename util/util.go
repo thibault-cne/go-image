@@ -1,9 +1,9 @@
 package util
 
 import (
-	"errors"
 	"image"
 	"image/color"
+	"math"
 )
 
 func Rank(color color.RGBA) float64 {
@@ -98,33 +98,43 @@ func Max(x, y int) int {
 	return x
 }
 
-func BlurMatrix(n int) [][]float64 {
-	if n%2 == 0 {
-		panic(errors.New("blur matrix constructor is not an odd number"))
-	}
-
+func GaussianBlurMatrix(n int) [][]float64 {
 	var (
 		b [][]float64
-		t float64
-		m int
+		s float64
 	)
 
-	m = (n / 2)
-	t = 1.0 / float64(n*n-1)
+	for i := -n; i < n+1; i++ {
+		var r []float64
 
-	for i := 0; i < n; i++ {
-		r := make([]float64, n)
-
-		for j := 0; j < n; j++ {
-			if i == m && j == m {
-				r[j] = 0
-				continue
-			}
-			r[j] = t
+		for j := -n; j < n+1; j++ {
+			t := GaussianDistribution(i, j, 1.5)
+			r = append(r, t)
+			s += t
 		}
 
 		b = append(b, r)
 	}
 
+	for i := 0; i < n*2+1; i++ {
+		for j := 0; j < n*2+1; j++ {
+			b[i][j] /= s
+		}
+	}
+
 	return b
+}
+
+func GaussianDistribution(x, y int, s float64) float64 {
+	var (
+		e  float64
+		f  float64
+		s2 float64
+	)
+
+	s2 = s * s
+	f = 1 / (2 * math.Pi * s2)
+	e = float64(x*x+y*y) / (2 * s2)
+
+	return f * math.Exp(-e)
 }

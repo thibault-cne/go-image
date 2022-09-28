@@ -149,30 +149,29 @@ func SobalEdge(img image.Image) *image.Gray {
 	return dst
 }
 
-func Blur(img image.Image, radius int) *image.RGBA {
+func GaussianBlur(img image.Image, radius int) *image.RGBA {
 	src := clone.CloneAsRGBA(img)
 	bounds := src.Bounds()
 	w, h := bounds.Dx(), bounds.Dy()
 
 	dst := image.NewRGBA(bounds)
 
-	b := util.BlurMatrix(radius)
+	blur := util.GaussianBlurMatrix(radius)
 
 	for x := 0; x < w; x++ {
 		for y := 0; y < h; y++ {
-			v := color.RGBA{0, 0, 0, 0}
+			var r, g, b, a float64
 
-			for i := 0; i < radius; i++ {
-				for j := 0; j < radius; j++ {
-					pix := src.At(x-1+i, y-1+j).(color.RGBA)
-					v.R += uint8((float64(pix.R) * b[i][j]))
-					v.G += uint8((float64(pix.G) * b[i][j]))
-					v.B += uint8((float64(pix.B) * b[i][j]))
-					v.A += uint8((float64(pix.A) * b[i][j]))
+			for i := 0; i < 2*radius+1; i++ {
+				for j := 0; j < 2*radius+1; j++ {
+					pix := src.At(x-radius+i, y-radius+j).(color.RGBA)
+					r += float64(pix.R) * blur[i][j]
+					g += float64(pix.G) * blur[i][j]
+					b += float64(pix.B) * blur[i][j]
+					a += float64(pix.A) * blur[i][j]
 				}
 			}
-
-			dst.Set(x, y, v)
+			dst.Set(x, y, color.RGBA{R: uint8(r), G: uint8(g), B: uint8(b), A: uint8(a)})
 		}
 	}
 

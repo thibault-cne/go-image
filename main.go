@@ -13,7 +13,7 @@ func main() {
 
 	img, _, _ := image.Decode(f)
 
-	dst := effects.Blur(img, 7)
+	dst := effects.GaussianBlur(img, 10)
 
 	nf, _ := os.Create("Blur.jpeg")
 	jpeg.Encode(nf, dst, &jpeg.Options{Quality: 95})

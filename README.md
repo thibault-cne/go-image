@@ -13,6 +13,7 @@ This go package has been created to do image processing with golang. I'm current
     - [Threshold](#threshold)
     - [Invert](#invert)
     - [Sobel Edge detection](#sobal-edge-detection)
+    - [Gaussian Blur](#gaussian-blur)
 2. [Licence](#licence)
 
 ## Effects
@@ -83,12 +84,12 @@ newImg := effects.SobalEdge(img)
 
 ![exemple](./assets/images/SobalEdge.jpeg)
 
-### Blur
+### Gaussian Blur
 
 You can blur an image. You can choose the blur radius. The bigger the blur radius, the more blur the picture will be.
 
 ```golang
-newImg := effects.Blur(img, 5)
+newImg := effects.GaussianBlur(img, 10)
 ```
 
 ![exemple](./assets/images/Blur.jpeg)
