@@ -14,8 +14,11 @@ This go package has been created to do image processing with golang. I'm current
     - [Invert](#invert)
     - [Sobel Edge detection](#sobal-edge-detection)
     - [Gaussian Blur](#gaussian-blur)
+
+2. [Filter](#filter)
     - [Color Filter](#color-filter)
-2. [Licence](#licence)
+
+3. [Licence](#licence)
 
 ## Effects
 
@@ -95,15 +98,44 @@ newImg := effects.GaussianBlur(img, 10)
 
 ![exemple](./assets/images/Blur.jpeg)
 
+### Brightness
+
+You can adjust picture brightness. You can lower it's level or raise it.
+
+```golang
+newImg := effects.Brightness(img, 85)
+```
+
+![exemple](./assets/images/PositiveBrightness.jpeg)
+![exemple](./assets/images/NegativeBrightness.jpeg)
+
+## Filter
+
 ### Color filter
 
 You can filter a specific color on an image. It will render only "close" colors and the others will be grayscaled.
 
 ```golang
-newImg := effects.ColorFilter(img, color.RGBA{255, 0, 0, 255}, 6.15)
+f := filter.Filter{Color: &color.RGBA{255, 0, 0, 255}}
+
+newImg := f.ColorFilter(img, 6.15)
 ```
 
 ![exemple](./assets/images/ColorFilter.jpeg)
+
+### Simple filter
+
+You can apply simple filters on images.
+
+```golang
+f := filter.Filter{Color: &color.RGBA{255, 0, 0, 255}}
+
+newImg := f.Apply(img)
+```
+
+![exemple](./assets/images/RedFilter.jpeg)
+![exemple](./assets/images/BlueFilter.jpeg)
+![exemple](./assets/images/GreenFilter.jpeg)
 
 ## Licence
 

@@ -138,3 +138,7 @@ func GaussianDistribution(x, y int, s float64) float64 {
 
 	return f * math.Exp(-e)
 }
+
+func Truncate(x int) int {
+	return Min(255, Max(0, x))
+}

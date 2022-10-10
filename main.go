@@ -3,7 +3,6 @@ package main
 import (
 	"go-image/effects"
 	"image"
-	"image/color"
 	"image/jpeg"
 	"os"
 )
@@ -14,8 +13,8 @@ func main() {
 
 	img, _, _ := image.Decode(f)
 
-	dst := effects.ColorFilter(img, color.RGBA{255, 0, 0, 255}, 6.15)
+	dst := effects.Brightness(img, 85)
 
-	nf, _ := os.Create("ColorFilter.jpeg")
+	nf, _ := os.Create("PositiveBrightness.jpeg")
 	jpeg.Encode(nf, dst, &jpeg.Options{Quality: 95})
 }
