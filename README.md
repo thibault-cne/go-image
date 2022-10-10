@@ -17,6 +17,7 @@ This go package has been created to do image processing with golang. I'm current
 
 2. [Filter](#filter)
     - [Color Filter](#color-filter)
+    - [Simple Filter](#simple-filter)
 
 3. [Licence](#licence)
 
