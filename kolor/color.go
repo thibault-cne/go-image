@@ -10,15 +10,15 @@ type Color struct {
 }
 
 // Default alpha value
-var alpha = 0xffff
+var alpha = 65535.0
 
 // D65 default value
 var D65 = [3]float64{95.0489, 100.0, 108.8840}
 
 func (c Color) RGBA() (r, g, b, a uint32) {
-	r = uint32(c.R*float64(alpha) + 0.5)
-	g = uint32(c.G*float64(alpha) + 0.5)
-	b = uint32(c.B*float64(alpha) + 0.5)
+	r = uint32(c.R*alpha + 0.5)
+	g = uint32(c.G*alpha + 0.5)
+	b = uint32(c.B*alpha + 0.5)
 	a = uint32(alpha)
 	return
 }
@@ -38,7 +38,7 @@ func MakeKolor(c color.Color) (Color, bool) {
 	b *= 0xffff
 	b /= a
 
-	return Color{float64(r) / float64(alpha), float64(g) / float64(alpha), float64(b) / float64(alpha)}, true
+	return Color{float64(r) / alpha, float64(g) / alpha, float64(b) / alpha}, true
 }
 
 func sq(v float64) float64 {
@@ -128,4 +128,41 @@ func (c1 Color) DistanceLAB(c2 Color) float64 {
 	l1, a1, b1 := c1.Lab()
 	l2, a2, b2 := c2.Lab()
 	return math.Sqrt(sq(l1-l2) + sq(a1-a2) + sq(b1-b2))
+}
+
+// HSL //
+
+// HSL convertion format
+func (c Color) HSL() (h, s, l float64) {
+	min := math.Min(math.Min(c.R, c.G), c.B)
+	max := math.Max(math.Max(c.R, c.G), c.B)
+
+	l = (max + min) / 2
+
+	if min == max {
+		s = 0
+		h = 0
+	} else {
+		if l < 0.5 {
+			s = (max - min) / (max + min)
+		} else {
+			s = (max - min) / (2.0 - max - min)
+		}
+
+		if max == c.R {
+			h = (c.G - c.B) / (max - min)
+		} else if max == c.G {
+			h = 2.0 + (c.B-c.R)/(max-min)
+		} else {
+			h = 4.0 + (c.R-c.G)/(max-min)
+		}
+
+		h *= 60
+
+		if h < 0 {
+			h += 360
+		}
+	}
+
+	return
 }
