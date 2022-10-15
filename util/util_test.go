@@ -4,6 +4,7 @@ import (
 	"errors"
 	"image"
 	"image/color"
+	"math"
 	"testing"
 )
 
@@ -268,5 +269,126 @@ func TestCheckError(t *testing.T) {
 				t.Errorf("should have panicked")
 			}
 		}(c.b)
+	}
+}
+
+func TestMin(t *testing.T) {
+	cases := []struct {
+		x, y   int
+		expect int
+	}{
+		{
+			x:      3,
+			y:      10,
+			expect: 3,
+		},
+		{
+			x:      3,
+			y:      3,
+			expect: 3,
+		},
+		{
+			x:      -10,
+			y:      10,
+			expect: -10,
+		},
+	}
+
+	for _, c := range cases {
+		e := Min(c.x, c.y)
+
+		if e != c.expect {
+			t.Errorf("%s : expected : %#v, actual : %#v.", "Min", c.expect, e)
+		}
+	}
+}
+
+func TestMax(t *testing.T) {
+	cases := []struct {
+		x, y   int
+		expect int
+	}{
+		{
+			x:      3,
+			y:      10,
+			expect: 10,
+		},
+		{
+			x:      3,
+			y:      3,
+			expect: 3,
+		},
+		{
+			x:      -10,
+			y:      10,
+			expect: 10,
+		},
+	}
+
+	for _, c := range cases {
+		e := Max(c.x, c.y)
+
+		if e != c.expect {
+			t.Errorf("%s : expected : %#v, actual : %#v.", "Max", c.expect, e)
+		}
+	}
+}
+
+func TestGaussianDistribution(t *testing.T) {
+	cases := []struct {
+		x, y int
+		s, e float64
+	}{
+		{
+			x: 0,
+			y: 0,
+			s: 1.5,
+			e: math.Exp(0.0) / (2 * math.Pi * 1.5 * 1.5),
+		},
+		{
+			x: 1,
+			y: -1,
+			s: 1.5,
+			e: math.Exp(-1.0/2.25) / (2 * math.Pi * 1.5 * 1.5),
+		},
+	}
+
+	for _, c := range cases {
+		e := GaussianDistribution(c.x, c.y, c.s)
+
+		if e != c.e {
+			t.Errorf("%s : expected : %#v, actual : %#v.", "GaussianDistribution", c.e, e)
+		}
+	}
+}
+
+func TestTruncate(t *testing.T) {
+	cases := []struct {
+		x, e int
+	}{
+		{
+			x: 200,
+			e: 200,
+		},
+		{
+			x: 0,
+			e: 0,
+		},
+		{
+			x: -1,
+			e: 0,
+		},
+		{
+			x: 260,
+			e: 255,
+		},
+	}
+
+	for _, c := range cases {
+		e := Truncate(c.x)
+
+		if e != c.e {
+			t.Errorf("%s : expected : %#v, actual : %#v.", "Truncate", c.e, e)
+		}
 	}
 }
