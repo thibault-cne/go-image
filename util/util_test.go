@@ -8,6 +8,21 @@ import (
 	"testing"
 )
 
+// Checks whether the relative error is below eps
+func almosteq_eps(v1, v2, eps float64) bool {
+	if math.Abs(v1) > delta {
+		return math.Abs((v1-v2)/v1) < eps
+	}
+	return true
+}
+
+// Checks whether the relative error is below the 8bit RGB delta, which should be good enough.
+const delta = 1.0 / 256.0
+
+func almosteq(v1, v2 float64) bool {
+	return almosteq_eps(v1, v2, delta)
+}
+
 func TestRank(t *testing.T) {
 	cases := []struct {
 		value    color.RGBA
@@ -351,12 +366,18 @@ func TestGaussianDistribution(t *testing.T) {
 			s: 1.5,
 			e: math.Exp(-1.0/2.25) / (2 * math.Pi * 1.5 * 1.5),
 		},
+		{
+			x: 2,
+			y: -1,
+			s: 1.5,
+			e: math.Exp(-5.0/4.5) / (2 * math.Pi * 1.5 * 1.5),
+		},
 	}
 
 	for _, c := range cases {
 		e := GaussianDistribution(c.x, c.y, c.s)
 
-		if e != c.e {
+		if !almosteq(c.e, e) {
 			t.Errorf("%s : expected : %#v, actual : %#v.", "GaussianDistribution", c.e, e)
 		}
 	}
